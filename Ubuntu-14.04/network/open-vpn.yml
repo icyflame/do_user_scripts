@@ -4,6 +4,8 @@ packages:
   - openvpn
   - easy-rsa
   - curl
+  - git
+  - vim
 runcmd:
   - IPADDR=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
   - gunzip -c /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > /etc/openvpn/server.conf
@@ -58,6 +60,12 @@ runcmd:
   - echo "<key>" >> /etc/openvpn/easy-rsa/keys/client.ovpn
   - cat /etc/openvpn/easy-rsa/keys/client1.key >> /etc/openvpn/easy-rsa/keys/client.ovpn
   - echo "</key>" >> /etc/openvpn/easy-rsa/keys/client.ovpn
+  
+  # Change the port that SSH listens on
+  - ufw allow 443
+  - ufw reload
+  - sed -ie 's/Port 22/Port 443/' /etc/ssh/sshd_config
+  - service ssh restart
 
   - cp /etc/openvpn/easy-rsa/keys/client.ovpn /root/
   - cp /etc/openvpn/easy-rsa/keys/client1.crt /root/
