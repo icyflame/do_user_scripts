@@ -4,11 +4,12 @@ packages:
   - curl
   - git
   - vim
-  - transmission-cli
-  - transmission-common
-  - transmission-daemon
   - ruby-full
 runcmd:
   - gem install gist
   - sed -ie 's/Port 22/Port 443/' /etc/ssh/sshd_config
   - service ssh restart
+  - cd
+  - git clone http://github.com/icyflame/dotfiles/git
+  - cd dotfiles
+  - bash bootstrap.sh digitalocean
