@@ -8,14 +8,16 @@ packages:
   - transmission-common
   - transmission-daemon
   - ruby-full
+  - nginx
 runcmd:
   - gem install gist
   - sed -ie 's/Port 22/Port 443/' /etc/ssh/sshd_config
   - service ssh restart
   - sudo add-apt-repository -y ppa:transmissionbt/ppa
   - sudo apt-get update
-  - sudo apt-get -y install transmission-cli transmission-common transmission-daemon
+  - sudo apt-get -y install transmission-cli transmission-common transmission-daemon npm
   - sudo service transmission-daemon stop
+  - npm install -g webtorrent-cli
   - cd
   - echo "sudo vim /var/lib/transmission-daemon/info/settings.json" >> setup.sh
   - echo "sudo service transmission-daemon start" >> setup.sh
